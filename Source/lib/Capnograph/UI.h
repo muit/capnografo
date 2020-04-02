@@ -20,7 +20,7 @@ public:
     void Start();
 
     void Draw(Capnograph& capnograph);
-    
+
     void SetCurrentCO2(float value) {}
     void UpdateRecording(const RecordingSet& recording) {}
 

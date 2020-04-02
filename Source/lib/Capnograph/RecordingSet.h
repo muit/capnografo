@@ -14,7 +14,7 @@ protected:
     i32 size = 0;
     float* valuesPtr = nullptr;
 
-    
+
     RecordingSet(float timePerSample, i32 maxSize)
         : timePerSample{timePerSample}
         , maxSize{maxSize}

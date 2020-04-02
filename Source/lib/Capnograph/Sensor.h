@@ -11,19 +11,30 @@ public:
 
     Sensor() {}
     virtual ~Sensor() {}
+
+    virtual void Start() {}
     virtual void Record(RecordingSet& record) = 0;
 };
 
-class Sensor_SprintIR : public Sensor
+class Sensor_SprintIRBase : public Sensor
 {
+protected:
+    i32 frequency = 20;
+    i32 serialBaudRate = 9600;
+
+private:
+
     char printBuffer[33];
     HardwareSerial sensorSerial {2};
 
+
 public:
 
-    Sensor_SprintIR() : Sensor()
+    Sensor_SprintIR() : Sensor() {}
+
+    virtual void Start() override
     {
-        sensorSerial.begin(9600);
+        sensorSerial.begin(serialBaudRate);
     }
 
     virtual void Record(RecordingSet& record) override
@@ -39,6 +50,18 @@ public:
         record.RecordValue(lastValue);
     }
 };
+
+
+class Sensor_SprintIR_R : public Sensor_SprintIRBase
+{
+public:
+    Sensor_SprintIR_R() : Sensor_SprintIRBase()
+    {
+        frequency = 50;
+        serialBaudRate = 38400;
+    }
+};
+
 
 class Sensor_MockAnalog : public Sensor
 {

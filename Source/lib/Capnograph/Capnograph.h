@@ -11,11 +11,16 @@
 
 class Capnograph
 {
+    // Change sensor type for different measuring devices.
+    // E.g: Sensor_MockAnalog
+    using SensorType = Sensor_SprintIR_R;
+
+
 public:
 
     Alarm alarm;
     UI ui;
-    Sensor& sensor{ realSensor };
+    SensorType sensor;
 
     Pattern_Hiperventilation pattern_hiperventilation;
     Pattern_Hipoventilation pattern_hipoventilation;
@@ -26,10 +31,6 @@ public:
     TInlineRecordingSet<300, 20> record {};
     FrameTime frame;
 
-private:
-
-    //Sensor_MockAnalog realSensor;
-    Sensor_SprintIR realSensor;
 
 public:
 
@@ -38,6 +39,7 @@ public:
         // No FPS cap as this is done by the sensor
         //frame.SetFPSCap(20);
         SetupPatterns();
+        sensor.Start();
         ui.Start();
     }
 

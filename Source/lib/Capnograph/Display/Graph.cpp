@@ -16,8 +16,8 @@ void Graph::Draw(Display& display, RecordingSet& record)
 
 void Graph::DrawAxis(Display& display) const
 {
-    DrawLine(display, {0.f, 0.f},     {0.f, maxY},    COLOR_WHITE);  // Y
-    DrawLine(display, {0.f, 0.f},     {maxX, 0.f},    COLOR_WHITE);  // X
+    DrawLine(display, {0.f, 0.f},     {0.f, maxY},     COLOR_WHITE);  // Y
+    DrawLine(display, {0.f, 0.f},     {maxX, 0.f},     COLOR_WHITE);  // X
     DrawLine(display, {0.f, midYBar}, {maxX, midYBar}, COLOR_ORANGE); // Mid Y
 }
 
