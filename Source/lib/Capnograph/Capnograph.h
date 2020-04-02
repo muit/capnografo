@@ -13,14 +13,14 @@ class Capnograph
 {
     // Change sensor type for different measuring devices.
     // E.g: Sensor_MockAnalog
-    using SensorType = Sensor_SprintIR_R;
+    using SensorType = Sensor_SprintIRBase;
 
 
 public:
 
     Alarm alarm;
     UI ui;
-    SensorType sensor;
+    SensorType sensor {};
 
     Pattern_Hiperventilation pattern_hiperventilation;
     Pattern_Hipoventilation pattern_hipoventilation;

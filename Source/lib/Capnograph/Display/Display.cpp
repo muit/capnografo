@@ -4,9 +4,9 @@
 
 void Display::Start()
 {
-    screen.enableTearing(false);
     screen.initR(INITR_BLACKTAB);
     FillColor(COLOR_BLACK);
+    screen.enableTearing(false);
     SetRotation(1);
 }
 
@@ -31,8 +31,7 @@ void Display::DrawLine(v2i a, v2i b, u16 color)
 void Display::DrawRect(v2i pos, v2i size, u16 color)
 {
     pos = ToScreen(pos);
-    size = ToScreen(size);
-    screen.drawRect(pos.x, pos.y, size.x, size.y, color);
+    screen.fillRect(pos.x, pos.y - size.y, size.x, size.y, color);
 }
 
 v2i Display::GetSize() const

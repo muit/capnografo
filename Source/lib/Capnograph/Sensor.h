@@ -30,7 +30,7 @@ private:
 
 public:
 
-    Sensor_SprintIR() : Sensor() {}
+    Sensor_SprintIRBase() : Sensor() {}
 
     virtual void Start() override
     {
@@ -42,7 +42,7 @@ public:
         // Wait for a new chain of values
         while(sensorSerial.read() != 'Z') {}
 
-        u32 co2filteredRX = sensorSerial.parseInt();
+        /*u32 co2filteredRX = */sensorSerial.parseInt();
         u32 co2rawRX = sensorSerial.parseInt();
 
         // Record value

@@ -14,7 +14,6 @@ void UI::Start()
 
 void UI::Draw(Capnograph& capnograph)
 {
-    display.FillColor(COLOR_BLACK);
     graph.Draw(display, capnograph.record);
 
     //Axis tests
@@ -43,7 +42,10 @@ void UI::DrawCurrentValue(Capnograph& capnograph)
     display.SetCursor({5, display.GetSize().y - 10});
     display.SetTextSize(4);
     display.SetTextColor(color, COLOR_BLACK);
-    display.Print(value, 0);
+
+    char valueTxt[2];
+    sprintf(valueTxt, "%02i", Math::RoundToInt(value));
+    display.Print(valueTxt);
 
     display.SetTextSize(1);
     display.Print("kppm");
@@ -70,7 +72,10 @@ void UI::DrawBreathsPerSecond(Capnograph& capnograph)
     display.SetCursor(cursor);
     display.SetTextSize(3);
     display.SetTextColor(color, COLOR_BLACK);
-    display.Print(value, 0);
+
+    char valueTxt[2];
+    sprintf(valueTxt, "%02i", Math::RoundToInt(value));
+    display.Print(valueTxt);
 
     v2i size;
     display.GetTextBounds("0", cursor, size);
