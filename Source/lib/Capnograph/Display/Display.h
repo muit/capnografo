@@ -4,6 +4,7 @@
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_ST7735.h>
+#include <Adafruit_ST7789.h>
 
 #include "Platform.h"
 #include "Math/v2.h"
@@ -18,7 +19,8 @@ class Display
 protected:
 
     //~ BEGIN Display Settings
-    using ScreenType = Adafruit_ST7735;
+    //using ScreenType = Adafruit_ST7735;
+    using ScreenType = Adafruit_ST7789;
     
     // Should X and Y be flipped?
     static constexpr bool bFlippedAxis = false;
