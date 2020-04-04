@@ -1,7 +1,4 @@
 
 **.DS_Store
-Tools/SprintIRSimulator/.vscode/extensions.json
-Source/.vscode/extensions.json
-Source/.vscode/extensions.json
-Source/platformio.ini
-Tools/SprintIRSimulator/platformio.ini
+**/extensions.json
+**/platformio.ini
