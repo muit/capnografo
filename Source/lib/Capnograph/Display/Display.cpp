@@ -1,10 +1,11 @@
 
-#include "Display/Display.h"
+#include "Display.h"
 
 
 void Display::Start()
 {
-    screen.initR(INITR_BLACKTAB);
+    //screen.initR(INITR_BLACKTAB);
+    screen.init(240,240,SPI_MODE2);
     FillColor(COLOR_BLACK);
     screen.enableTearing(false);
     SetRotation(1);
