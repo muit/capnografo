@@ -38,10 +38,11 @@ Materials used at "BricoLabs" prototype:
   * [ROB-10398 Sparkfun air pump](https://www.tme.eu/es/details/sf-rob-10398/motores-de-cc/sparkfun-electronics-inc/rob-10398/)
 
 ## Team
-[Miguel Fernandez](https://github.com/muit)  
-[Raul Quesada](https://github.com/raquenaengineering)  
-[Andrés SB](https://github.com/andrwssb)  
-[Alejandro Taracido](https://github.com/tcrobotics)    
+* [Miguel Fernandez](https://github.com/muit)  
+* [Raul Quesada](https://github.com/raquenaengineering)  
+* [Andrés SB](https://github.com/andrwssb)  
+* [Alejandro Taracido](https://github.com/tcrobotics) 
+* Add you here in alphabetical order!
 
 ## Project external resources
 - Main Web for resources, summaries and colaboration channels: https://capnography.zyrosite.com/
