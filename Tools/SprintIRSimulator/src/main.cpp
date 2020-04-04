@@ -1,5 +1,5 @@
 //speedy and dirty programmed by @TCRobotics
-//This code outputs continuosly a simulated data from a SprintIR sensor trough serial
+//This code outputs continuosly a simulated data from a SprintIR-R sensor trough serial
 //You can upload this to a arduino board and conect from the serial TX to simulate a sensor
 //The raw data has an 0 to 100 ppm random offset per sample, the filtered is always the same.
 
@@ -45,17 +45,19 @@ u32 ppmData[]
     1283, 1228, 1174, 1120, 1067, 1016, 964, 914, 865, 816, 30339
 };
 
-void SimulateSprintIR(u32 co2filteredTX, u32 co2rawTX)
+const unsigned int divider = 10; //SprintIR sends CO2 ppm values divided by 10
+
+void SimulateSprintIR(u32 co2rawTX)
 {
     static char buffer[18];
-    //Simulate the protocol "Z XXXXX z XXXXX\r\n"
-    sprintf(buffer,"Z %05i z %05i\r\n", co2filteredTX, co2rawTX);
+    //Simulate the protocol "z XXXXX\r\n"
+    sprintf(buffer,"z %05i\r\n", co2rawTX/divider); 
     Serial.print(buffer);
 }
 
 void setup()
 {
-    Serial.begin(9600);
+    Serial.begin(38400); //SprintIR-R sensor has this baudrate
     randomSeed(analogRead(0)); //make random more random
 }
 
@@ -64,7 +66,16 @@ void loop()
     for(u32 index = 0; index < 501; ++index)
     {
         const auto& value = ppmData[index];
-        SimulateSprintIR(value, value + random(1500));
-        delay(50); //50ms delay = aprox 20Hz
+        SimulateSprintIR(value + random(1500));
+        delay(20); //20ms delay = aprox 50Hz
+        if(Serial.read()=='.') //search for "get multiplier command"
+        {
+            Serial.read(); //get the \r
+            Serial.read(); //get the \n
+            static char buffer[10];
+            //Simulate the /SprintIR response ". XXXXX\r\n"
+            sprintf(buffer,". %05i\r\n", divider);
+            Serial.print(buffer);
+        }
     }
 }
