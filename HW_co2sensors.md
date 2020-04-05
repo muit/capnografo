@@ -13,8 +13,8 @@ For this prototype we choose the **SprintIR-R-20** for these reasons:
 * Is digital, with serial communication
 
 ## Other valid sensors
-At capnograph project many members are trying to make another prototype with Pyreos epy12231 I2C sensor. Developing PCBs, and air conducts. 
-See the slack channel [#sensor-epy12231](https://bit.ly/2QETJuY)
+At capnograph project many members are trying to make another prototype with Pyreos epy12231 I2C sensor. Other group are working with Pyreos PY2343 analog sensor. Both groups are developing PCBs, and air conducts. 
+See the slack channels: [#sensor-epy12231](https://bit.ly/2QETJuY) and [#py2343_sensor](https://bit.ly/2QETJuY)
 
 ## Checked Sensors
 At this table we show the found sensors and their caracteristics. If you know a unlisted VALID sensor please add it here!
@@ -40,7 +40,7 @@ At this table we show the found sensors and their caracteristics. If you know a 
 | ExploIR-W-100   | 100%  | 0.5s      | <10s | 10s      | 70ppm+5% | NO     | 101€  | [data](https://docs.rs-online.com/4cdd/0900766b8168eabb.pdf) |
 | ExploIR-M-20    | 20%   | 0.5s      | <10s | 10s      | 70ppm+5% | NO     | 222€  | [data](https://www.gassensing.co.uk/wp-content/uploads/2018/10/ExplorIR-M-CO2-sensor-datasheet.pdf) |
 | ePY12231        | ?     | 0.001s    | ?    | ?        | ?        | maybe? | 30€   | [data](https://www.mouser.es/datasheet/2/948/ezpyro_ir_sensor_for_gas_sensing_short_form_datash-1483387.pdf) |
-| PY2343          | ?     | ?         | ?    | ?        | ?        | maybe? | 60€   | [data](https://pyreos.com/wp-content/uploads/2019/06/Pyreos-Analog-TO-Sensor-Two-Channels-Datasheet.pdf) |
+| PY2343          | ?     | ?         | ?    | ?        | ?        | maybe? | 60€   | [data](https://www.mouser.es/datasheet/2/948/pyreos_ir_sensor_for_gas_sensing_-_two_channel-1483382.pdf) |
 | K30             | 0.5%  | 0.5s      | 60s  | 20s      | 30ppm+3% | NO     | 79€   | [data](https://rmtplusstoragesenseair.blob.core.windows.net/docs/publicerat/PSP109.pdf) |
 | MH-Z19          | 0.5%  | 5s        | 180s | <60s     | 50ppm+5% | NO     | 27€   | [data](https://www.winsen-sensor.com/d/files/PDF/Infrared%20Gas%20Sensor/NDIR%20CO2%20SENSOR/MH-Z19%20CO2%20Ver1.0.pdf) |
 | MH-Z14A         | 1%    | ?         | 189s | <120s    | 10%      | NO     | 37€   | [data](https://www.winsen-sensor.com/d/files/infrared-gas-sensor/mh-z14a_co2-manual-v1_01.pdf) |
