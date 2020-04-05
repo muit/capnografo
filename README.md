@@ -24,9 +24,8 @@ We are open to colaboration so we are expecting your pull request!!
 ### "BricoLabs" prototype
 The first prototype was funded by [BricoLabs](https://bricolabs.cc/) (OSHW maker non profit association) and builded by [TCRobotics](https://github.com/TCRobotics). Also the expensive CO2 sensor was provided for free for this project by [Gas Sensing Solutions UK](https://www.gassensing.co.uk/), thanks for all the help!
 
-You have many photos at [Design/BricoLabs prototype](Design/BricoLabs%20prototype) folder.
-
-Materials used at "BricoLabs" prototype:  
+You have many photos at [Design/BricoLabs prototype](Design/BricoLabs%20prototype) folder.  
+#### Materials used at "BricoLabs" prototype  
 * [SprintIR-R-20](https://www.gassensing.co.uk/product/sprintir-r/) CO2 sensor
 * [TTGO MINI 32](https://es.aliexpress.com/item/32846710180.html) ESP32 development board
 * [1.3" TFT IPS 240x240 65k ST7735 Display](https://www.aliexpress.com/item/32947890530.html?spm=a2g0s.9042311.0.0.274263c0QKCxM4)
@@ -36,6 +35,21 @@ Materials used at "BricoLabs" prototype:
   * (Pending to find suitable water trap)
   * [Particulate hidrofobic filter](https://tienda.fisaude.com/filtro-antibacteriano-hidrofobico-para-aspiradores-secreciones-conector-8mm-p-37398.html)
   * [ROB-10398 Sparkfun air pump](https://www.tme.eu/es/details/sf-rob-10398/motores-de-cc/sparkfun-electronics-inc/rob-10398/)
+
+#### Pinout
+| ESP32 pin | Function             | Device pin |
+|:----------|:---------------------|:-----------|
+| 3V3       | LCD Power            | LCD VCC    |
+| 3V3       | LCD Back light       | LCD BLK    |
+| GND       | LCD Power            | LCD GND    |
+| 18        | LCD SPI clock        | LCD SCK    |
+| 23        | LCD SPI data         | LCD SDA    |
+| 2         | LCD SPI Data Command | LCD DC     |
+| 4         | LCD Reset            | LCD RES    |
+| 3V3       | CO2 Sensor Power     | LCD VCC    |
+| GND       | CO2 Sensor Power     | LCD GND    |
+| 16        | CO2 Sensor TX        | Sensor TX  |
+| 17        | CO2 Sensor RX        | Sensor RX  |
 
 ## Team
 * [Miguel Fernandez](https://github.com/muit)  
