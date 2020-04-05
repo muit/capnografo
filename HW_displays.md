@@ -1,20 +1,20 @@
 # Displays
 A display is needed for showing the CO2 graph and measures as breaths per minute (bpm) and end tidal CO2 (etCO2).
 
-## Suported displays  
+## Supported displays  
 Right now this project supports two displays:  
-* [Ywrobot TFT LCD screen](https://www.amazon.co.uk/gp/product/B07N6FQ5XW/)
-** 128x160 resolution
-** 262K colors
-** 1.8 inch
-** SPI control
-** ST7735 driver
-* [FeiYang GMT130-V1.0](https://www.aliexpress.com/item/32947890530.html?spm=a2g0s.9042311.0.0.274263c0QKCxM4)
-** 240x240 resolution
-** 65K colors
-** 1.3 inch
-** SPI control
-** ST7789 driver
+* [Ywrobot TFT LCD screen](https://www.amazon.co.uk/gp/product/B07N6FQ5XW/)  
+  * 128x160 resolution  
+  * 262K colors  
+  * 1.8 inch  
+  * SPI control  
+  * ST7735 driver  
+* [FeiYang TFT LCD IPS GMT130-V1.0](https://www.aliexpress.com/item/32947890530.html?spm=a2g0s.9042311.0.0.274263c0QKCxM4)  
+  * 240x240 resolution  
+  * 65K colors  
+  * 1.3 inch  
+  * SPI control  
+  * ST7789 driver  
 
 ### Pinout
 | ST7735 pin | Function         | ESP32 pin |
