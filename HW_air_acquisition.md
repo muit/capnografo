@@ -45,7 +45,7 @@ Disadvantages
 ### "BricoLabs" prototype
 This prototype uses the side stream method to measure the CO2 concentration.
 
-PATIENT > TUBE > WATER TRAP > TUBE > PARTICULATE FILTER > TUBE > SENSOR > TUBE > PUMP
+PATIENT > PARTICULATE FILTER > WATER TRAP > HIDROPHOBIC FILTER > SENSOR > PUMP
 
 #### Mask
 [Oxigen mask](https://tienda.fisaude.com/mascarilla-adulto-con-siete-concentraciones-p-40206.html) is used for testing.
@@ -54,12 +54,14 @@ PATIENT > TUBE > WATER TRAP > TUBE > PARTICULATE FILTER > TUBE > SENSOR > TUBE >
 We mainly use 6mm ID tube for all breath line, and 8mm ID tube to adapt to filter and pump inlets and outlets.
 
 #### Water trap
-We don´t find a easy to buy water trap in Spain. If you know let us know! We think about make a DIY one with a glass jar.
+A water trap is needed for remove as much of water vapour as posible because it will affect the correct functioning of the sensor. We don´t find a easy to buy water trap in Spain. If you know let us know! We think about make a DIY one with a glass jar.
 
-#### Particulate filter
+#### Particulate & hidrophobic filter
+Seems that first is needed a particulate filter of 150 micron and after the water trap a hidrophobic filter of 0.22 micron.
+For this prototype we don't found a particulate filter, but we found this 1 micron EPTFE hidrophobic membrane [filter](https://tienda.fisaude.com/filtro-antibacteriano-hidrofobico-para-aspiradores-secreciones-conector-8mm-p-37398.html) [(specs)](http://www.medicalfiltrationsolutions.com/wp-content/uploads/2015/09/MFS-TDS-0033_M03.1.003.pdf). With the first test without water trap we found that almost all water vapor was removed by the filter but better filtration may be necessary.
 
 #### CO2 sensor
+SprintIR-R-20 is the sensor used. More info at [CO2 sensors documentation](HW_co2sensors.md).
 
 #### PUMP
-
-
+It's recomended a suction air pump with 500ml/min flow, but we only found the [ROB-10398 Sparkfun air pump](https://www.tme.eu/es/details/sf-rob-10398/motores-de-cc/sparkfun-electronics-inc/rob-10398/) as fast shipping alternative to aliexpress cheap micro pumps. It has 12-15l/min but we use lower than nominal voltage to use less flow.
