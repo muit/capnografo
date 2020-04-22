@@ -4,12 +4,24 @@
 
 HardwareSerial sensor(2); //U2TX 17, U2RX16
 
-long sensorData[1000];
+#define SENSOR_DATA_LENGTH 1000
+
+long sensorData[SENSOR_DATA_LENGTH];
 unsigned int dataIndex = 0;
 
 unsigned int sensorMult = 0;
 unsigned int sensorSampleTime = 0;
 unsigned int sensorMaxSamples = 0;
+
+
+/**
+ * @brief  Find the maximum in the range of the sensor data. Simple approach
+ * @note   
+ * @param  startIndex: 
+ * @param  finishIndex: 
+ * @retval max in range
+ */
+long findMax(unsigned int startIndex, unsigned int finishIndex);
 
 
 int parseSprintIR(void)
@@ -118,4 +130,49 @@ void setupSprintIR(void)
       while(1);
     }
   }
+}
+
+long getMaxDataSensorValue(unsigned int startingIndex, unsigned int endingIndex)
+{
+  // sensorData
+  // SENSOR_DATA_LENGTH
+  long retVal = 0;
+
+  if(startingIndex < endingIndex)
+  {
+    long firstRangeMax = findMax(startingIndex, SENSOR_DATA_LENGTH);
+    long secondRangeMax = findMax(0, endingIndex);
+
+    if (firstRangeMax>=secondRangeMax)
+    {
+      retVal = firstRangeMax;
+    }
+    else
+    {
+      retVal = secondRangeMax;
+    }/* code */
+    
+
+  } else if(endingIndex > startingIndex)
+  {
+    retVal = findMax(startingIndex, endingIndex);
+  }
+  else
+  {
+    retVal = sensorData[startingIndex];
+  }
+
+
+  return retVal;
+}
+
+long findMax(unsigned int startIndex, unsigned int finishIndex)
+{
+  long retVal = sensorData[startIndex];
+  for(unsigned int i = startIndex; i < finishIndex; i++)
+  {
+    if (sensorData[i]>retVal)
+      retVal = sensorData[i];
+  }
+  return retVal;
 }
