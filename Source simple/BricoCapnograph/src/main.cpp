@@ -19,5 +19,5 @@ void loop()
 {
   parseSprintIR();
   analyzeData();
-  printDisplay();
+  printGraph();
 }

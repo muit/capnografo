@@ -94,11 +94,12 @@ void analyzeData(void)
 
   breathStateIdentification();
 
-  processAlarmApnea();
+  //processAlarmApnea();
 
   etCO2MaxMonitor();
 
-  BreathPerMinuteCounter();
+  printBPM(23);
+  //BreathPerMinuteCounter();
 }
 
 void breathStateIdentification()
@@ -111,6 +112,7 @@ void breathStateIdentification()
   case WAIT_BASELINE:
     if (lastState != breathState)
       logMessage("WAIT_BASELINE");
+      printState("WAIT_BASELINE");
 
     //analize
     if (sensorData[dataIndex - 1] < LOW_CO2_LIMIT)
@@ -131,6 +133,7 @@ void breathStateIdentification()
     {
       indexBaselineStart = dataIndex;
       logMessage("BASELINE");
+      printState("BASELINE");
     }
 
     //analize
@@ -156,6 +159,7 @@ void breathStateIdentification()
     {
       indexUpstrokeStart = dataIndex;
       logMessage("EXP_UPSTROKE");
+      printState("EXP_UPSTROKE");
     }
     //analize
     if (sensorData[dataIndex - 1] - sensorData[lastDataIndex] < PLATEAU_MAX_INC)
@@ -181,6 +185,7 @@ void breathStateIdentification()
     {
       indexPlateauStart = dataIndex;
       logMessage("EXP_PLATEAU");
+      printState("EXP_PLATEAU");
     }
     //analize
     if (sensorData[lastDataIndex] - sensorData[dataIndex - 1] > INSPIRATION_MIN_INC)
@@ -195,6 +200,11 @@ void breathStateIdentification()
       inspiration_CO2_count = 0;
       nextState = INSPIRATION;
     }
+    else if (sensorData[dataIndex-1]<LOW_CO2_LIMIT)
+    {
+      inspiration_CO2_count = 0;
+      nextState = INSPIRATION;
+    }
     break;
 
   case INSPIRATION:
@@ -202,6 +212,7 @@ void breathStateIdentification()
     {
       indexInspirationStart = dataIndex;
       logMessage("INSPIRATION");
+      printState("INSPIRATION");
     }
     //analize
     if (sensorData[dataIndex - 1] < INSPIRATION_MIN_INC)

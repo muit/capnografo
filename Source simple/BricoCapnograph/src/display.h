@@ -29,10 +29,11 @@ extern unsigned int samplesPerPixel;
 extern Adafruit_ST7789 display;
 
 void setupDisplay(void);
-void printDisplay(void);
+void printGraph(void);
 void setupGraph(void);
 
 void printBPM(unsigned int bpm); // belongs to display actually
-void printEtCO2(unsigned int bpm); // belongs to display actually
+void printEtCO2(long bpm); // belongs to display actually
+void printState(const char *state); // belongs to display actually
 
 #endif

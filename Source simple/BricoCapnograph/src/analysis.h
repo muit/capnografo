@@ -11,7 +11,7 @@
 
 
 
-#define LOW_CO2_LIMIT  (1000) // PPM
+#define LOW_CO2_LIMIT  (10000) // PPM
 #define BASELINE_COUNT_MIN (10) // Minimum consecutive measures under LOW_CO2_LIMIT to get to state BASELINE
 #define BASELINE_COUNT_MAX (500) // Used for apnea alarm, 
 
