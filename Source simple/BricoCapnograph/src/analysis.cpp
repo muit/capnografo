@@ -16,6 +16,12 @@ unsigned int lastState = 0;   // WAIT_BASELINE
 
 unsigned int lastDataIndex = 0;
 
+// To annotate the boundaries of different breathing states
+unsigned int indexBaselineStart = 0;
+unsigned int indexUpstrokeStart = 0;
+unsigned int indexPlateauStart = 0;
+unsigned int indexInspirationStart = 0;
+
 unsigned int baseline_CO2_count = 0;
 unsigned int baseline_state_count = 0;
 unsigned int upstroke_CO2_count = 0;
@@ -24,19 +30,54 @@ unsigned int inspiration_CO2_count = 0;
 
 unsigned int apneaAlarm = 0;
 
-
-unsigned short int rpm_instantaneous = 0;
+uint8_t bmp_counter_print = 0;
+unsigned int bpm_instantaneous = 0;
 unsigned int bmp_lastSampleTime = 0;
 
 // private functions
 
-void logMessage(const char * , ...); // belongs to display actually
 
+/**
+ * @brief  Identifies the breathing status and follows its evolution.
+ * @note   It will evolve the state machine captured in breathState
+ * @retval None
+ */
 void breathStateIdentification(void);
 
-void processAlarmApnea(void); 
+/**
+ * @brief  Identifies an Apnea event
+ * @note   It is just a sketch, we need to connect it to listeners.
+ * @retval None
+ */
+void processAlarmApnea(void);
 
+/**
+ * @brief  Identify the point where a new breath beggings and stimate the 
+ * respirations per minute (rpm)
+ * @note   It also call the function display.h>printBPM and logMessage with a 
+ * frec stablish by the macro analysis.h>BPM_PRINT_INTERVAL
+ * @retval None
+ */
 void BreathPerMinuteCounter(void);
+
+/**
+ * @brief  Obtain the etCO2Max in the last breath
+ * @note   
+ * @retval None
+ */
+void etCO2MaxMonitor(void);
+
+/**
+ * @brief  Auxiliar function to log the messages to the serial
+ * @param  format: The string to print, it can be literal or add format and 
+ * extra parameters
+ * @retval None
+ * 
+ * http://www.cplusplus.com/reference/cstdarg/
+ * http://www.cplusplus.com/reference/cstdio/sprintf/
+ */
+void logMessage(const char *, ...); // belongs to display actually
+
 
 /**
  * @brief  process the data analysis in the hyperloop. It will identify the 
@@ -55,18 +96,11 @@ void analyzeData(void)
 
   processAlarmApnea();
 
-  //processAlarmNoReturnToBaseline()
-
-  //
+  etCO2MaxMonitor();
 
   BreathPerMinuteCounter();
 }
 
-/**
- * @brief  Identifies the breathing status and follows its evolution.
- * @note   It will evolve the state machine captured in breathState
- * @retval None
- */
 void breathStateIdentification()
 {
   lastState = breathState;
@@ -95,8 +129,10 @@ void breathStateIdentification()
   case BASELINE:
     if (lastState != breathState)
     {
+      indexBaselineStart = dataIndex;
       logMessage("BASELINE");
     }
+
     //analize
     if (sensorData[dataIndex - 1] > sensorData[lastDataIndex])
       upstroke_CO2_count++;
@@ -118,6 +154,7 @@ void breathStateIdentification()
   case EXP_UPSTROKE:
     if (lastState != breathState)
     {
+      indexUpstrokeStart = dataIndex;
       logMessage("EXP_UPSTROKE");
     }
     //analize
@@ -142,6 +179,7 @@ void breathStateIdentification()
   case EXP_PLATEAU:
     if (lastState != breathState)
     {
+      indexPlateauStart = dataIndex;
       logMessage("EXP_PLATEAU");
     }
     //analize
@@ -162,6 +200,7 @@ void breathStateIdentification()
   case INSPIRATION:
     if (lastState != breathState)
     {
+      indexInspirationStart = dataIndex;
       logMessage("INSPIRATION");
     }
     //analize
@@ -186,16 +225,12 @@ void breathStateIdentification()
   }
 }
 
-/**
- * @brief  Identifies an Apnea event
- * @note   It is just a sketch, we need to connect it to listeners.
- * @retval None
- */
+
 void processAlarmApnea()
 {
   switch (breathState)
   {
-  case BASELINE/* constant-expression */:
+  case BASELINE /* constant-expression */:
     if (baseline_state_count > BASELINE_COUNT_MAX)
     {
       if (apneaAlarm == 0)
@@ -203,72 +238,64 @@ void processAlarmApnea()
         apneaAlarm = 1; // Take actions
         logMessage("ALRM: APNEA");
       }
-
     }
     break;
-  
+
   default:
     apneaAlarm = 0;
     break;
   }
-
 }
 
-/**
- * @brief  Identify the point where a new breath beggings and stimate the 
- * respirations per minute (rpm)
- * @note   It is just a sketch, we need to connect it to listeners.
- * @retval None
- */
 void BreathPerMinuteCounter(void)
 {
-    if ((lastState != breathState) & (breathState == BASELINE))
+  if ((lastState != breathState) & (breathState == BASELINE))
+  {
+    int elapsedTime = sensorSampleTime - bmp_lastSampleTime;
+
+    if (elapsedTime < 0) // Overflow in sensorSampleTime
     {
-      int elapsedTime = sensorSampleTime - bmp_lastSampleTime;
-
-      if(elapsedTime > 0)
-      {
-        rpm_instantaneous = 60*1000 / elapsedTime ;
-       
-        logMessage("BPM %i",rpm_instantaneous);
-      }
-
-      
-      bmp_lastSampleTime = sensorSampleTime;
-      
+      elapsedTime = (INT_MAX - bmp_lastSampleTime) + sensorSampleTime;
     }
+    bmp_lastSampleTime = sensorSampleTime;
+
+    bpm_instantaneous += 60 * 1000 / elapsedTime; // Will average later
+    bmp_counter_print++;
+
+    if (bmp_counter_print >= BPM_PRINT_INTERVAL)
+    {
+      bpm_instantaneous = bpm_instantaneous / BPM_PRINT_INTERVAL;
+
+      printBPM(bpm_instantaneous);
+      logMessage("BPM %i", bpm_instantaneous); // log in the serial
+
+      bpm_instantaneous = 0;
+      bmp_counter_print = 0;
+    }
+  }
 }
 
+void etCO2MaxMonitor(void)
+{
+  if ((lastState != breathState) & (breathState == INSPIRATION))
+  {
+    long etCO2Max = getMaxDataSensorValue(indexPlateauStart,
+                                               indexInspirationStart);
+    printEtCO2((unsigned int)etCO2Max/100);
+    logMessage("EtCO2 %i", (unsigned int)etCO2Max/100); // log in the serial
+  }
+}
 
-/**
- * @brief  Auxiliar function to log the messages to the serial and display
- * @note   This is not the right location. If we want to print a badge in the
- * screen or do loggings it is better to include that as a facility of the 
- * display class
- * @param  format: 
- * @retval None
- * 
- * 
- * http://www.cplusplus.com/reference/cstdarg/
- * http://www.cplusplus.com/reference/cstdio/sprintf/
- */
-void logMessage(const char * format, ...)
+void logMessage(const char *format, ...)
 {
   std::va_list args;
 
-  va_start(args,format);
+  va_start(args, format);
 
   char formatedMsg[80];
   sprintf(formatedMsg, format, args);
 
   va_end(args);
-  
+
   Serial.println(formatedMsg);
-  /* ToDo: Defeer this to a function pointer
-          representating things is not the analysis responsibility
-        */
-  display.fillRect(0, 30, 239, 60, COLOR_BLACK);
-  display.setCursor(0, 30);
-  display.print(formatedMsg);
-  va_end(args);
 }

@@ -23,6 +23,7 @@
 #define INSPIRATION_MIN_INC  (100)
 #define INSPIRATION_COUNT_MIN  (5)
 
+#define BPM_PRINT_INTERVAL (3) // Number of breath to count before send the BPM
 
 void analyzeData(void);
 

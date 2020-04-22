@@ -127,3 +127,49 @@ void setupGraph(void)
   Serial.println(totalMsDisplay);
   delay(1000);
 }
+
+/**
+ * @brief  Print in the assigned portion of the screen the Breaths per minute
+ * @note   
+ * @param  bpm: breaths per minutes
+ * @retval None
+ */
+void printBPM(unsigned int bpm)
+{
+  // Compose the string. No longer that 10 characters
+  char formatedMsg[10];
+  sprintf(formatedMsg, "BPM %i", bpm); //BPM XXX(7)
+  
+  //Clean the needed area
+  display.fillRect(0, 60, 239, 90, COLOR_BLACK);
+  
+  // Set the pen in place
+  display.setCursor(0, 60);
+
+  // Write the message
+  display.print(formatedMsg);
+
+}
+
+/**
+ * @brief  Print in the assigned portion of the screen the Breaths per minute
+ * @note   
+ * @param  etCO2: The value of etCO2 in percentage (%) 
+ * @retval None
+ */
+void printEtCO2(unsigned int etCO2)
+{
+  // Compose the string. No longer that 10 characters
+  char formatedMsg[10];
+  sprintf(formatedMsg, "etCO2 %i/%", etCO2); //etCO2 XXX%(9)
+  
+  //Clean the needed area
+  display.fillRect(0, 90, 239, 120, COLOR_BLACK);
+  
+  // Set the pen in place
+  display.setCursor(0, 90);
+
+  // Write the message
+  display.print(formatedMsg);
+
+}

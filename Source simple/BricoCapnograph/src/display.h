@@ -32,4 +32,7 @@ void setupDisplay(void);
 void printDisplay(void);
 void setupGraph(void);
 
+void printBPM(unsigned int bpm); // belongs to display actually
+void printEtCO2(unsigned int bpm); // belongs to display actually
+
 #endif
