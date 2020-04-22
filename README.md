@@ -52,10 +52,11 @@ You have many photos at [Design/BricoLabs prototype](Design/BricoLabs%20prototyp
 | 17        | CO2 Sensor RX        | Sensor RX  |
 
 ## Team
+* [Julio Beltrán Ortega](https://github.com/jubeormk1)
 * [Miguel Fernandez](https://github.com/muit)  
 * [Raul Quesada](https://github.com/raquenaengineering)  
 * [Andrés SB](https://github.com/andrwssb)  
-* [Alejandro Taracido](https://github.com/tcrobotics) 
+* [Alejandro Taracido](https://github.com/tcrobotics)
 * Add you here in alphabetical order!
 
 ## Project external resources
