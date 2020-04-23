@@ -59,7 +59,7 @@ void printCO2(long CO2)
 {
   // Compose the string. No longer that 10 characters
   char formatedMsg[3];
-  sprintf(formatedMsg, "%2l", (CO2/1000)); //XX(2)
+  sprintf(formatedMsg, "%2i", int(CO2/1000)); //XX(2)
 
   //Clean the needed area
   display.fillRect(0,0,97,40,COLOR_RED);
@@ -87,7 +87,7 @@ void printEtCO2(long etCO2)
 {
   // Compose the string. No longer that 10 characters
   char formatedMsg[7];
-  sprintf(formatedMsg, "%2l", (etCO2/1000)); //XX(6)
+  sprintf(formatedMsg, "%2i", int(etCO2/1000)); //XX(6)
   
   //Clean the needed area
   display.fillRect(99, 0, 239, 40, COLOR_ORANGE);
