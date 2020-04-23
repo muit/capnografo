@@ -34,6 +34,9 @@ uint8_t bmp_counter_print = 0;
 unsigned int bpm_instantaneous = 0;
 unsigned int bmp_lastSampleTime = 0;
 
+long tempEtCO2 = 0;
+long lastEtCO2 = 0;
+
 // private functions
 
 
@@ -96,7 +99,8 @@ void analyzeData(void)
 
   //processAlarmApnea();
 
-  etCO2MaxMonitor();
+  printEtCO2(lastEtCO2);
+  //etCO2MaxMonitor();
 
   printBPM(23);
   //BreathPerMinuteCounter();
@@ -134,6 +138,8 @@ void breathStateIdentification()
       indexBaselineStart = dataIndex;
       logMessage("BASELINE");
       printState("BASELINE");
+      lastEtCO2 = tempEtCO2;
+      tempEtCO2 = 0;
     }
 
     //analize
@@ -166,6 +172,9 @@ void breathStateIdentification()
       plateau_CO2_count++;
     else
       plateau_CO2_count = 0;
+
+    if(sensorData[dataIndex - 1] > tempEtCO2)
+      tempEtCO2 = sensorData[dataIndex - 1];
     //Alarms
     //check high CO2
     //transition
@@ -192,6 +201,8 @@ void breathStateIdentification()
       inspiration_CO2_count++;
     else
       inspiration_CO2_count = 0;
+
+    if(sensorData[dataIndex - 1]> tempEtCO2) tempEtCO2 = sensorData[dataIndex - 1];
     //Alarms
     //check high CO2
     //transition
@@ -213,9 +224,10 @@ void breathStateIdentification()
       indexInspirationStart = dataIndex;
       logMessage("INSPIRATION");
       printState("INSPIRATION");
+
     }
     //analize
-    if (sensorData[dataIndex - 1] < INSPIRATION_MIN_INC)
+    if (sensorData[dataIndex - 1] < LOW_CO2_LIMIT)
       baseline_CO2_count++;
     else
       baseline_CO2_count = 0;
